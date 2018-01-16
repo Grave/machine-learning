@@ -121,7 +121,7 @@ class LearningAgent(Agent):
         # Set the agent state and default action
         self.state = state
         self.next_waypoint = self.planner.next_waypoint()
-        action = random.choice(self.valid_actions)
+        chosen_action = random.choice(self.valid_actions)
 
         ########### 
         ## TO DO ##
@@ -134,20 +134,10 @@ class LearningAgent(Agent):
         choose_random_action = random.random() <= self.epsilon
         
         if self.learning and not choose_random_action:
-            state_actions_dict = self.Q[state]
-            q_values = list(state_actions_dict.values())
-            
-            max_q = max(q_values)
-            
-            highest_q_actions = []
-            
-            for action, q_value in state_actions_dict.items():
-                if (q_value == max_q):
-                    highest_q_actions.append(action)
-                    
-            action = random.choice(highest_q_actions)
+            best_actions = [action for action in self.valid_actions if self.Q[state][action] == max(self.Q[state].values())]                    
+            chosen_action = random.choice(best_actions)
         
-        return action
+        return chosen_action
 
 
     def learn(self, state, action, reward):
