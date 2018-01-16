@@ -310,11 +310,13 @@ class Environment(object):
                 violation = 2 # Major violation
                 if inputs['left'] == 'forward' or inputs['right'] == 'forward': # Cross traffic
                     violation = 4 # Accident
-            else: # Green light
-                if inputs['oncoming'] == 'left' or inputs['oncoming'] == 'forward': # Oncoming car turning left
+                elif inputs['oncoming'] == 'right': # Oncoming car turning right
                     violation = 4 # Accident
-                else:
-                    heading = (heading[1], -heading[0]) # Valid move.
+            else:# Green light
+                if inputs['oncoming'] == 'right' or inputs['oncoming'] == 'forward': # Incoming traffic
+                    violation = 3 # Accident
+                else: # Valid move!
+                    heading = (heading[1], -heading[0])
 
         # Agent wants to drive right:
         elif action == 'right':
