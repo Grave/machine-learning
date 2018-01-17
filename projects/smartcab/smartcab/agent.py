@@ -103,13 +103,7 @@ class LearningAgent(Agent):
         #   Then, for each action available, set the initial Q-value to 0.0
 
         if self.learning and state not in self.Q:
-            initial_q = 0.0
-            state_actions = {}
-            
-            for action in self.valid_actions:
-                state_actions[action] = initial_q
-            
-            self.Q[state] = state_actions
+            self.Q[state] = {a : 0.0 for a in self.valid_actions}
 
         return
 
